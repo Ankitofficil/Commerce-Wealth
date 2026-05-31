@@ -1,0 +1,16 @@
+# OS / editor
+Thumbs.db
+.DS_Store
+*.swp
+.vscode/
+
+# Scratch / screenshots
+_*/
+_*.html
+_*.js
+_*.png
+_*.txt
+
+# Node (if a build is added later)
+node_modules/
+dist/

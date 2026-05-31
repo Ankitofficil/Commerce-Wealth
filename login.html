@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Portal — Commerce Wealth</title>
+  <meta name="description" content="Commerce Wealth login portal for Students, Staff and Parents." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .login-wrap { min-height: calc(100vh - var(--header-h)); display: grid; place-items: center; padding: 48px 0;
+      background: radial-gradient(800px 500px at 80% -10%, rgba(240,165,0,.12), transparent 60%),
+                  linear-gradient(135deg,#16223d,var(--navy)); }
+    .login-card { width: 100%; max-width: 460px; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .login-tabs { display: grid; grid-template-columns: repeat(3,1fr); background: var(--grey-50); border-bottom: 1px solid var(--grey-100); }
+    .login-tab { padding: 16px 8px; text-align: center; font-family: var(--font-head); font-weight: 600; font-size: .92rem; color: var(--grey-600); border-bottom: 3px solid transparent; transition: .15s; }
+    .login-tab .ico { display: block; font-size: 1.3rem; margin-bottom: 4px; }
+    .login-tab.active { color: var(--navy); background: #fff; border-bottom-color: var(--gold); }
+    .login-body { padding: 30px 32px 34px; }
+    .login-pane { display: none; }
+    .login-pane.active { display: block; animation: fade .2s ease; }
+    .login-body h2 { font-size: 1.35rem; }
+    .login-body .pane-sub { color: var(--grey-600); font-size: .9rem; margin: 4px 0 22px; }
+    .login-foot-note { font-size: .82rem; color: var(--grey-400); margin-top: 14px; line-height: 1.5; }
+    .login-links { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: .85rem; margin-top: 6px; }
+    .login-links a { color: var(--emerald); font-weight: 600; }
+    .secure-note { text-align: center; color: #93a2bd; font-size: .82rem; margin-top: 20px; max-width: 420px; }
+    @keyframes fade { from{opacity:0} to{opacity:1} }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand"><span class="brand-mark">CW</span>Commerce <span>Wealth</span></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a><a href="about.html">About Us</a><a href="courses.html">Courses</a>
+        <a href="results.html">Results</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+        <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+      </nav>
+      <div class="nav-cta"><a href="contact.html" class="btn btn-primary btn-sm">Book Free Demo</a></div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="login-wrap">
+    <div>
+      <div class="login-card">
+        <div class="login-tabs">
+          <button class="login-tab active" data-pane="student"><span class="ico">🎓</span>Student</button>
+          <button class="login-tab" data-pane="staff"><span class="ico">💼</span>Staff</button>
+          <button class="login-tab" data-pane="parent"><span class="ico">🛡️</span>Parent</button>
+        </div>
+        <div class="login-body">
+          <!-- Student -->
+          <div class="login-pane active" id="pane-student">
+            <h2>Welcome Back</h2>
+            <p class="pane-sub">Access your dashboard, track your progress, and stay ahead.</p>
+            <form onsubmit="location.href='student-dashboard.html';return false;">
+              <div class="field"><label>Student ID / Roll Number</label><input type="text" value="CW-2026-0042" placeholder="e.g. CW-2026-0042" required /></div>
+              <div class="field"><label>Password</label><input type="password" value="demo1234" placeholder="Enter your password" required /></div>
+              <label class="check" style="margin-bottom:16px"><input type="checkbox" /> Remember me</label>
+              <button type="submit" class="btn btn-primary btn-block">Login as Student →</button>
+              <div class="login-links"><a href="#">Forgot password?</a><span class="muted">New student? Contact your coordinator.</span></div>
+            </form>
+            <p class="login-foot-note">Student accounts are created by staff on enrolment. Credentials (Student ID + temporary password) are provided on the first day of class.</p>
+          </div>
+
+          <!-- Staff -->
+          <div class="login-pane" id="pane-staff">
+            <h2>Staff Portal</h2>
+            <p class="pane-sub">Manage attendance, materials, quizzes and student reports.</p>
+            <form onsubmit="location.href='staff-dashboard.html';return false;">
+              <div class="field"><label>Staff Email</label><input type="email" value="vasu@commercewealth.in" placeholder="e.g. vasu@commercewealth.in" required /></div>
+              <div class="field"><label>Password</label><input type="password" value="demo1234" placeholder="Enter your password" required /></div>
+              <label class="check" style="margin-bottom:16px"><input type="checkbox" /> Remember me</label>
+              <button type="submit" class="btn btn-secondary btn-block">Login as Staff →</button>
+              <div class="login-links"><a href="#">Forgot password?</a></div>
+            </form>
+            <p class="login-foot-note">Staff accounts are created by the admin (Vasu Sir / Aditya Sir). Only authorised faculty and coordinators have staff access.</p>
+          </div>
+
+          <!-- Parent -->
+          <div class="login-pane" id="pane-parent">
+            <h2>Parent Portal</h2>
+            <p class="pane-sub">Follow your child's attendance, results and progress.</p>
+            <form onsubmit="location.href='parent-dashboard.html';return false;">
+              <div class="field"><label>Parent ID / Student ID</label><input type="text" value="CW-P-2026-0042" placeholder="e.g. CW-P-2026-0042" required /></div>
+              <div class="field"><label>Password</label><input type="password" value="demo1234" placeholder="Enter your password" required /></div>
+              <label class="check" style="margin-bottom:16px"><input type="checkbox" /> Remember me</label>
+              <button type="submit" class="btn btn-primary btn-block">Login as Parent →</button>
+              <div class="login-links"><a href="#">Forgot password?</a><span class="muted">No credentials? Ask the coordinator.</span></div>
+            </form>
+            <p class="login-foot-note">Parent accounts are linked to the student's profile (one per student). Credentials are sent via SMS/WhatsApp at enrolment.</p>
+          </div>
+        </div>
+      </div>
+      <p class="secure-note">🔒 Your data is safe with us. Commerce Wealth uses encrypted authentication and never shares personal information. Sessions expire after 30 minutes of inactivity.<br><strong style="color:#aebbd2">Demo:</strong> credentials are pre-filled — just click any Login button.</p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.querySelectorAll(".login-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".login-tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".login-pane").forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById("pane-" + tab.dataset.pane).classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
