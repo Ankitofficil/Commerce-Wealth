@@ -5,11 +5,11 @@
 
 body.dash { background: var(--grey-50); }
 
-.dash-layout { display: grid; grid-template-columns: 256px 1fr; min-height: 100vh; }
+.dash-layout { min-height: 100vh; padding-left: 256px; }
 
 /* ---------- Sidebar ---------- */
 .sidebar {
-  background: var(--navy); color: #c3cee2; position: sticky; top: 0; height: 100vh;
+  background: var(--navy); color: #c3cee2; position: fixed; left: 0; top: 0; width: 256px; height: 100vh; z-index: 50;
   display: flex; flex-direction: column; padding: 20px 14px; overflow-y: auto;
 }
 .sidebar .brand { color: #fff; padding: 6px 8px 18px; border-bottom: 1px solid rgba(255,255,255,.1); margin-bottom: 14px; font-size: 1.15rem; }
@@ -216,8 +216,8 @@ table.dtable tr.me { background: #fff8e8 !important; font-weight: 600; }
 /* mobile sidebar */
 .backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 90; }
 @media (max-width: 860px) {
-  .dash-layout { grid-template-columns: 1fr; }
-  .sidebar { position: fixed; left: 0; top: 0; width: 256px; z-index: 100; transform: translateX(-100%); transition: transform .25s; }
+  .dash-layout { padding-left: 0; }
+  .sidebar { z-index: 100; transform: translateX(-100%); transition: transform .25s; }
   .sidebar.open { transform: none; }
   .backdrop.show { display: block; }
   .menu-btn { display: block; }
