@@ -52,7 +52,6 @@ body.dash { background: var(--grey-50); }
 /* ---------- Stat cards ---------- */
 .stat-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin-bottom: 26px; }
 @media (max-width:1000px){ .stat-cards{ grid-template-columns: repeat(2,1fr);} }
-@media (max-width:520px){ .stat-cards{ grid-template-columns: 1fr;} }
 .stat {
   background: #fff; border: 1px solid var(--grey-100); border-radius: var(--radius);
   padding: 20px; box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 16px;
@@ -266,9 +265,17 @@ table.dtable tr.me { background: #fff8e8 !important; font-weight: 600; }
   .chart-box, .chart-box.sm { height: 260px; }
 }
 
+/* compact KPI widgets on mobile: stay 2-up, stack vertically */
+@media (max-width: 600px) {
+  .stat-cards { gap: 12px; margin-bottom: 20px; }
+  .stat { flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px 14px; }
+  .stat .ic { width: 40px; height: 40px; border-radius: 10px; font-size: 1.15rem; }
+  .stat .val { font-size: 1.35rem; }
+  .stat .lbl { font-size: .78rem; }
+}
 @media (max-width: 360px) {
-  .stat { padding: 16px; gap: 12px; }
-  .stat .val { font-size: 1.3rem; }
+  .stat { padding: 14px 12px; }
+  .stat .val { font-size: 1.25rem; }
 }
 
 /* ============================================================
@@ -307,4 +314,43 @@ table.dtable tr.me { background: #fff8e8 !important; font-weight: 600; }
   }
   /* let progress-bar cells fill the right side neatly */
   table.dtable.cards td .bar { flex: 1; min-width: 0; }
+
+  /* cells holding action buttons (e.g. Present/Absent/Late, Review, Export):
+     stack the label above and let the controls use the full card width so
+     they never get clipped at the right edge */
+  table.dtable.cards td:has(.att-toggle),
+  table.dtable.cards td:has(> .btn),
+  table.dtable.cards td:has(.flex) {
+    flex-direction: column; align-items: stretch; text-align: left; gap: 8px;
+  }
+  table.dtable.cards td:has(.att-toggle)::before,
+  table.dtable.cards td:has(> .btn)::before,
+  table.dtable.cards td:has(.flex)::before { flex: none; }
+  table.dtable.cards td .att-toggle,
+  table.dtable.cards td .flex { width: 100%; flex-wrap: wrap; }
+  table.dtable.cards td .att-toggle .btn { flex: 1 1 auto; }
+
+  /* ---- compact variant: wide tables (6-8 cols) flow as a 2-col grid ---- */
+  table.dtable.compact.cards tbody tr {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0 6px;
+    padding: 6px 4px;
+  }
+  /* first cell = the row's identifier; span full width as a header */
+  table.dtable.compact.cards td:first-child {
+    grid-column: 1 / -1; flex-direction: column; align-items: flex-start;
+    text-align: left; gap: 2px; padding: 6px 10px 8px;
+    border-bottom: 1px solid var(--grey-100);
+  }
+  table.dtable.compact.cards td:first-child::before {
+    flex: none; font-size: .68rem;
+  }
+  table.dtable.compact.cards td:first-child b { font-size: 1.02rem; color: var(--navy); }
+  /* remaining cells: tight stacked label-over-value pairs, two per row */
+  table.dtable.compact.cards td:not(:first-child) {
+    flex-direction: column; align-items: flex-start; text-align: left;
+    gap: 1px; padding: 7px 10px; border-bottom: 0;
+  }
+  table.dtable.compact.cards td:not(:first-child)::before {
+    flex: none; font-size: .66rem; color: var(--grey-400); margin: 0;
+  }
 }
