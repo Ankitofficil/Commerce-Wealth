@@ -56,4 +56,79 @@
       });
     });
   });
+
+  // ----- Animations -----
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Scroll reveal: fade/rise sections and card grids into view.
+  // Tag elements automatically so the HTML stays clean.
+  const revealSel = [
+    ".section-head",
+    ".grid",
+    ".cta-banner",
+    ".table-wrap",
+    ".founder",
+    ".testimonial",
+    ".faq-item",
+  ];
+  const groups = new Set([".grid"]); // children get staggered
+  document.querySelectorAll(revealSel.join(",")).forEach((el) => {
+    if (el.closest(".hero")) return; // hero has its own load animation
+    el.setAttribute("data-reveal", "");
+    if (groups.has(".grid") && el.classList.contains("grid")) {
+      el.setAttribute("data-reveal-group", "");
+    }
+  });
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("in"));
+  } else {
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+  }
+
+  // Count-up: animate numbers like "500+", "90+", "100%" when they scroll in.
+  function countUp(el) {
+    const raw = el.textContent.trim();
+    const m = raw.match(/^(\d[\d,]*)(.*)$/); // leading number + suffix (+, %, etc.)
+    if (!m) return; // skip ranges like "15–20"
+    const target = parseInt(m[1].replace(/,/g, ""), 10);
+    const suffix = m[2];
+    if (!target || target > 100000) return;
+    const dur = 1100;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const numbers = document.querySelectorAll(".hero-stat .num, [data-count]");
+  if (!reduceMotion && numbers.length && "IntersectionObserver" in window) {
+    const numIO = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            countUp(e.target);
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+    numbers.forEach((n) => numIO.observe(n));
+  }
 })();
